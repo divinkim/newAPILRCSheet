@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolvePackageJsonExports": true,
+
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false,
+
+    "target": "ES2023",
+    "outDir": "./dist",
+    "baseUrl": ".",
+
+    "paths": {
+      "generated/prisma/*": ["generated/prisma/*"]
+    },
+
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "incremental": true
+  }
+}
