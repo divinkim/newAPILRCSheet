@@ -8,66 +8,58 @@ export class LoginService {
     constructor(private prisma: PrismaService) { }
 
     async authenticate(email: string, password: string) {
-        // const passwordRegex = /^[a-zA-Z0-9+@_!*]{4,}$/;
-        // const emailRegex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,}$/;
+        try {
+            const user = await this.prisma.employees.findFirst({ where: { email } });
 
-        // if (!emailRegex.test(email)) {
-        //     return {
-        //         status: false,
-        //         title: "Champ invalide!",
-        //         message: "Veuillez saisir une adresse mail valide."
-        //     }
-        // } else if (!passwordRegex.test(password)) {
-        //     return {
-        //         status: false,
-        //         title: "Champ invalide!",
-        //         message: "Veuillez saisir un mot de passe valide."
-        //     }
-        // }
+            if (!user) {
+                return {
+                    status: false,
+                    title: "Recherche non aboutie",
+                    message: "Aucun utilisateur correspondant. Veuilez réessayer",
+                }
+            }
 
-        const user = await this.prisma.employees.findFirst({ where: { email } });
+            const isValidPassword = await bcrypt.compare(password, user.password);
 
-        if (!user) {
+            if (!isValidPassword) {
+                return {
+                    status: false,
+                    title: "Mot de passe invalide",
+                    message: "Veuillez réessayer"
+                }
+            }
+
+            const TOKEN = process.env.TOKEN;
+
+            const token = jwt.sign(
+                { id: user.id },
+                String(TOKEN),
+                {}
+            );
+
+            const getEnterprise = await this.prisma.enterprises.findFirst({
+                where: { id: Number(user?.EnterpriseId) }
+            });
+
+            return {
+                status: true,
+                message: "Authentification réussie",
+                token,
+                user: {
+                    firstname: user?.firstname,
+                    lastname: user?.lastname,
+                    EnterpriseId: user?.EnterpriseId,
+                    UserId: user?.id,
+                    latitude: getEnterprise?.latitude,
+                    longitude: getEnterprise?.longitude,
+                }
+            }
+        } catch (error) {
+            console.log(error);
             return {
                 status: false,
-                title: "Recherche non aboutie",
-                message: "Aucun utilisateur correspondant. Veuilez réessayer",
-            }
-        }
-
-        const isValidPassword = await bcrypt.compare(password, user.password);
-
-        if (!isValidPassword) {
-            return {
-                status: false,
-                title: "Mot de passe invalide",
-                message: "Veuillez réessayer"
-            }
-        }
-
-        const TOKEN = process.env.TOKEN;
-
-        const token = jwt.sign(
-            { id: user.id },
-            String(TOKEN),
-            { expiresIn: undefined }
-        );
-
-        const getEnterprise = await this.prisma.enterprises.findFirst({
-            where: { id: Number(user?.EnterpriseId) }
-        });
-
-        return {
-            status: true,
-            message: "Authentification réussie",
-            token,
-            user: {
-                firstname: user?.firstname,
-                lastname: user?.lastname,
-                EnterpriseId: user?.EnterpriseId,
-                UserId: user?.id,
-                latitude: getEnterprise?.latitude,
-                longitude: getEnterprise?.longitude
+                title: "Erreur inattendue!",
+                message: "Une erreur est survenue. Veuillez consulter votre administrateur.",
             }
         }
     }
