@@ -361,18 +361,18 @@ model employees {
   appointments                 appointments[]
   attendances                  attendances[]
   complaints                   complaints[]
-  enterprises                  enterprises?                   @relation(fields: [EnterpriseId], references: [id], onDelete: NoAction, map: "employees_ibfk_194163")
-  department_posts             department_posts?              @relation(fields: [DepartmentPostId], references: [id], map: "employees_ibfk_194164")
-  posts                        posts?                         @relation(fields: [PostId], references: [id], map: "employees_ibfk_194165")
-  salaries                     salaries?                      @relation(fields: [SalaryId], references: [id], map: "employees_ibfk_194166")
-  countries                    countries?                     @relation(fields: [CountryId], references: [id], onDelete: NoAction, map: "employees_ibfk_194167")
-  cities                       cities?                        @relation(fields: [CityId], references: [id], onDelete: NoAction, map: "employees_ibfk_194168")
-  districts                    districts?                     @relation(fields: [DistrictId], references: [id], map: "employees_ibfk_194169")
-  quarters                     quarters?                      @relation(fields: [QuarterId], references: [id], map: "employees_ibfk_194170")
-  Plannings                    Plannings?                     @relation(fields: [PlanningId], references: [id], map: "employees_ibfk_194171")
-  planning_types               planning_types?                @relation(fields: [PlanningTypeId], references: [id], map: "employees_ibfk_194172")
-  contract_types               contract_types?                @relation(fields: [ContractTypeId], references: [id], map: "employees_ibfk_194173")
-  contracts                    contracts?                     @relation(fields: [ContractId], references: [id], map: "employees_ibfk_194174")
+  Enterprise                  enterprises?                   @relation(fields: [EnterpriseId], references: [id], onDelete: NoAction, map: "employees_ibfk_194163")
+  DepartmentPost             department_posts?              @relation(fields: [DepartmentPostId], references: [id], map: "employees_ibfk_194164")
+  Post                        posts?                         @relation(fields: [PostId], references: [id], map: "employees_ibfk_194165")
+  Salary                     salaries?                      @relation(fields: [SalaryId], references: [id], map: "employees_ibfk_194166")
+  Country                    countries?                     @relation(fields: [CountryId], references: [id], onDelete: NoAction, map: "employees_ibfk_194167")
+  City                       cities?                        @relation(fields: [CityId], references: [id], onDelete: NoAction, map: "employees_ibfk_194168")
+  District                    districts?                     @relation(fields: [DistrictId], references: [id], map: "employees_ibfk_194169")
+  Quarter                     quarters?                      @relation(fields: [QuarterId], references: [id], map: "employees_ibfk_194170")
+  Planning                    Plannings?                     @relation(fields: [PlanningId], references: [id], map: "employees_ibfk_194171")
+  PlanningType               planning_types?                @relation(fields: [PlanningTypeId], references: [id], map: "employees_ibfk_194172")
+  ContractType               contract_types?                @relation(fields: [ContractTypeId], references: [id], map: "employees_ibfk_194173")
+  Contract                    contracts?                     @relation(fields: [ContractId], references: [id], map: "employees_ibfk_194174")
   fcm_tokens                   fcm_tokens[]
   notifications                notifications[]
   permissions                  permissions[]
