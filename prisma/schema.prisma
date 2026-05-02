@@ -135,10 +135,10 @@ model attendances {
   day            String?      @db.VarChar(255)
   mounth         Int?
   EnterpriseId   Int?
-  employees      employees?   @relation(fields: [UserId], references: [id], map: "attendances_ibfk_57899")
-  salaries       salaries?    @relation(fields: [SalaryId], references: [id], map: "attendances_ibfk_57900")
-  Plannings      Plannings?   @relation(fields: [PlanningId], references: [id], onDelete: NoAction, map: "attendances_ibfk_57901")
-  enterprises    enterprises? @relation(fields: [EnterpriseId], references: [id], map: "attendances_ibfk_57902")
+  User      employees?   @relation(fields: [UserId], references: [id], map: "attendances_ibfk_57899")
+  Salary       salaries?    @relation(fields: [SalaryId], references: [id], map: "attendances_ibfk_57900")
+  Planning      Plannings?   @relation(fields: [PlanningId], references: [id], onDelete: NoAction, map: "attendances_ibfk_57901")
+  Enterprise    enterprises? @relation(fields: [EnterpriseId], references: [id], map: "attendances_ibfk_57902")
 
   @@index([EnterpriseId], map: "EnterpriseId")
   @@index([PlanningId], map: "PlanningId")
